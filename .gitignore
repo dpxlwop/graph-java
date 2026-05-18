@@ -43,4 +43,5 @@ bin/
 .DS_Store
 
 ### School 21 rules ###
-README_RUS.md
+s21_graph_algorithms/README_RUS.md
+.jar
