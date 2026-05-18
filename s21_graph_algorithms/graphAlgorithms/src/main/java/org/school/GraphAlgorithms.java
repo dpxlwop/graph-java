@@ -149,4 +149,39 @@ public class GraphAlgorithms {
         }
         return distances;
     }
+
+    public static int[][] getLeastSpanningTree(Graph graph) {
+        if (graph == null) {
+            throw new NullPointerException("Graph is null");
+        }
+        boolean[] visited = new boolean[graph.getSize()];
+        int[][] mst = new int[graph.getSize()][graph.getSize()];
+        visited[0] = true;
+        for (int k = 0; k < graph.getSize() - 1; k++) {
+            int minWeight = Integer.MAX_VALUE;
+            int from = -1;
+            int to = -1;
+            for (int i = 0; i < graph.getSize(); i++) {
+                if (visited[i]) {
+                    for (int j = 0; j < graph.getSize(); j++) {
+                        int current = graph.getAdjacencyMatrix()[i][j];
+                        if (!visited[j]
+                                && current > 0
+                                && current < minWeight) {
+                            minWeight = current;
+                            from = i;
+                            to = j;
+                        }
+                    }
+                }
+            }
+            if (to == -1) {
+                throw new IllegalArgumentException("Graph is disconnected");
+            }
+            mst[from][to] = minWeight;
+            mst[to][from] = minWeight;
+            visited[to] = true;
+        }
+        return mst;
+    }
 }

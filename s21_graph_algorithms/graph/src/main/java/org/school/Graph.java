@@ -127,6 +127,5 @@ public class Graph {
         this.adjacencyMatrix = matrix;
         this.size = matrixSize;
         this.isWeighted = checkWeighted();
-
     }
 }
