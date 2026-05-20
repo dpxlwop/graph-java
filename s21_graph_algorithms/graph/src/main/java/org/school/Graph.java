@@ -1,6 +1,10 @@
 package org.school;
 
 import lombok.Getter;
+import org.school.exceptions.EmptyFileException;
+import org.school.exceptions.SaveFailException;
+import org.school.exceptions.WrongFileException;
+import org.school.exceptions.WrongMatrixException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -14,10 +18,14 @@ public class Graph {
     private int[][] adjacencyMatrix;
     private int size;
     private boolean isWeighted;
+    private boolean isEmpty;
+
+    public Graph(){
+        this.isEmpty = true;
+    }
 
     public Graph(int[][] matrix) {
         checkMatrix(matrix);
-
         this.adjacencyMatrix = new int[matrix.length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(
@@ -25,8 +33,7 @@ public class Graph {
                     0,
                     this.adjacencyMatrix[i],
                     0,
-                    matrix.length
-            );
+                    matrix.length);
         }
         this.size = this.adjacencyMatrix.length;
         this.isWeighted = checkWeighted();
@@ -41,20 +48,22 @@ public class Graph {
             List<String> lines = Files.readAllLines(Path.of(filename));
             lines.removeIf(String::isBlank);
             if (lines.isEmpty()) {
-                throw new IllegalArgumentException("File is empty");
+                throw new EmptyFileException();
             }
             parseAdjacencyMatrix(lines);
+            this.isEmpty = false;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load from file", e);
+            throw new WrongFileException();
         }
     }
 
     public void exportGraphToDot(String filename) {
+        checkIsGraphEmpty();
         String dotString = getGraphDotString();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write(dotString);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save file", e);
+            throw new SaveFailException();
         }
     }
 
@@ -65,12 +74,10 @@ public class Graph {
             for (int j = i + 1; j < this.size; j++) {
                 if (this.adjacencyMatrix[i][j] != 0) {
                     stringBuilder.append(
-                            String.format("\t%d -- %d", i + 1, j + 1)
-                    );
+                            String.format("\t%d -- %d", i + 1, j + 1));
                     if (this.isWeighted) {
                         stringBuilder.append(
-                                String.format(" [label=\"%d\"];\n", this.adjacencyMatrix[i][j])
-                        );
+                                String.format(" [label=\"%d\"];%n", this.adjacencyMatrix[i][j]));
                     } else {
                         stringBuilder.append(";\n");
                     }
@@ -94,18 +101,18 @@ public class Graph {
 
     private void checkMatrix(int[][] matrix) {
         if (matrix == null) {
-            throw new IllegalArgumentException("Given matrix is null!");
+            throw new WrongMatrixException("Given matrix is null!");
         }
         if (matrix.length == 0) {
-            throw new IllegalArgumentException("Matrix size is 0");
+            throw new WrongMatrixException("Matrix size is 0");
         }
         for (int[] row : matrix) {
             if (row.length != matrix.length) {
-                throw new IllegalArgumentException("Adjacency matrix must be a square!");
+                throw new WrongMatrixException("Adjacency matrix must be a square!");
             }
             for (int val : row) {
                 if (val < 0) {
-                    throw new IllegalArgumentException("Negative numbers not allowed");
+                    throw new WrongMatrixException("Negative numbers not allowed");
                 }
             }
         }
@@ -117,7 +124,7 @@ public class Graph {
         for (int i = 0; i < matrixSize; i++) {
             String[] values = file.get(i).trim().split("\\s+");
             if (values.length != matrixSize) {
-                throw new IllegalArgumentException("Adjacency matrix must be square");
+                throw new WrongMatrixException("Adjacency matrix must be square");
             }
             for (int j = 0; j < matrixSize; j++) {
                 matrix[i][j] = Integer.parseInt(values[j]);
@@ -127,5 +134,11 @@ public class Graph {
         this.adjacencyMatrix = matrix;
         this.size = matrixSize;
         this.isWeighted = checkWeighted();
+    }
+
+    private void checkIsGraphEmpty(){
+        if (isEmpty){
+            throw new WrongMatrixException("This operation not allowed with empty graph");
+        }
     }
 }

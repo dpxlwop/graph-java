@@ -1,8 +1,11 @@
 package org.school;
 
 import org.junit.jupiter.api.Test;
+import org.school.exceptions.WrongMatrixException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GraphFloydWarshallTest {
 
@@ -54,7 +57,7 @@ class GraphFloydWarshallTest {
 
     @Test
     void allShortestPathsDisconnectedGraphTest() {
-        int INF = Integer.MAX_VALUE;
+        int inf = Integer.MAX_VALUE;
 
         int[][] matrix = {
                 {0, 1, 0},
@@ -65,9 +68,9 @@ class GraphFloydWarshallTest {
         Graph graph = new Graph(matrix);
 
         int[][] expected = {
-                {0, 1, INF},
-                {1, 0, INF},
-                {INF, INF, 0}
+                {0, 1, inf},
+                {1, 0, inf},
+                {inf, inf, 0}
         };
 
         int[][] result =
@@ -120,7 +123,7 @@ class GraphFloydWarshallTest {
 
     @Test
     void allShortestPathsDirectedGraphTest() {
-        int INF = Integer.MAX_VALUE;
+        int inf = Integer.MAX_VALUE;
 
         int[][] matrix = {
                 {0, 5, 0},
@@ -132,8 +135,8 @@ class GraphFloydWarshallTest {
 
         int[][] expected = {
                 {0, 5, 7},
-                {INF, 0, 2},
-                {INF, INF, 0}
+                {inf, 0, 2},
+                {inf, inf, 0}
         };
 
         int[][] result =
@@ -162,7 +165,7 @@ class GraphFloydWarshallTest {
     @Test
     void allShortestPathsNullGraphTest() {
         assertThrows(
-                NullPointerException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms
                         .getShortestPathsBetweenAllVertices(null)
         );
@@ -231,7 +234,7 @@ class GraphFloydWarshallTest {
 
     @Test
     void allShortestPathsFullyDisconnectedGraphTest() {
-        int INF = Integer.MAX_VALUE;
+        int inf = Integer.MAX_VALUE;
 
         int[][] matrix = {
                 {0, 0, 0},
@@ -242,9 +245,9 @@ class GraphFloydWarshallTest {
         Graph graph = new Graph(matrix);
 
         int[][] expected = {
-                {0, INF, INF},
-                {INF, 0, INF},
-                {INF, INF, 0}
+                {0, inf, inf},
+                {inf, 0, inf},
+                {inf, inf, 0}
         };
 
         int[][] result =

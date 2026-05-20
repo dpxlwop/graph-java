@@ -1,6 +1,8 @@
 package org.school;
 
 import org.junit.jupiter.api.Test;
+import org.school.exceptions.WrongInputData;
+import org.school.exceptions.WrongMatrixException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,10 +21,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 4, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 4, 3}, result);
     }
 
     @Test
@@ -38,42 +37,25 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3, 4},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3, 4}, result);
     }
 
     @Test
     void dfsSingleVertexTest() {
-        int[][] matrix = {
-                {0}
-        };
-
-        Graph graph = new Graph(matrix);
+        Graph graph = new Graph(new int[][]{{0}});
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1},
-                result
-        );
+        assertArrayEquals(new int[]{1}, result);
     }
 
     @Test
     void bfsSingleVertexTest() {
-        int[][] matrix = {
-                {0}
-        };
-
-        Graph graph = new Graph(matrix);
+        Graph graph = new Graph(new int[][]{{0}});
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1},
-                result
-        );
+        assertArrayEquals(new int[]{1}, result);
     }
 
     @Test
@@ -89,10 +71,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2}, result);
     }
 
     @Test
@@ -108,10 +87,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2}, result);
     }
 
     @Test
@@ -126,10 +102,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3}, result);
     }
 
     @Test
@@ -144,10 +117,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3}, result);
     }
 
     @Test
@@ -164,10 +134,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 2);
 
-        assertArrayEquals(
-                new int[]{2, 1, 3, 4, 5},
-                result
-        );
+        assertArrayEquals(new int[]{2, 1, 3, 4, 5}, result);
     }
 
     @Test
@@ -184,10 +151,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 2);
 
-        assertArrayEquals(
-                new int[]{2, 1, 3, 4, 5},
-                result
-        );
+        assertArrayEquals(new int[]{2, 1, 3, 4, 5}, result);
     }
 
     @Test
@@ -203,10 +167,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3, 4},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3, 4}, result);
     }
 
     @Test
@@ -222,10 +183,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3, 4},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3, 4}, result);
     }
 
     @Test
@@ -242,10 +200,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 4, 5, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 4, 5, 3}, result);
     }
 
     @Test
@@ -262,38 +217,31 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3, 4, 5},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, result);
     }
 
     @Test
     void dfsInvalidStartVertexLowTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1},
                 {1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.depthFirstSearch(graph, 0)
         );
     }
 
     @Test
     void bfsInvalidStartVertexHighTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1},
                 {1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.breadthFirstSearch(graph, 3)
         );
     }
@@ -310,10 +258,7 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.depthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3}, result);
     }
 
     @Test
@@ -328,15 +273,13 @@ class GraphDFUBFSTest {
 
         int[] result = GraphAlgorithms.breadthFirstSearch(graph, 1);
 
-        assertArrayEquals(
-                new int[]{1, 2, 3},
-                result
-        );
+        assertArrayEquals(new int[]{1, 2, 3}, result);
     }
+
     @Test
     void dfsNullGraphTest() {
         assertThrows(
-                NullPointerException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms.depthFirstSearch(null, 1)
         );
     }
@@ -344,69 +287,61 @@ class GraphDFUBFSTest {
     @Test
     void bfsNullGraphTest() {
         assertThrows(
-                NullPointerException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms.breadthFirstSearch(null, 1)
         );
     }
 
     @Test
     void dfsNegativeStartVertexTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1},
                 {1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.depthFirstSearch(graph, -5)
         );
     }
 
     @Test
     void bfsNegativeStartVertexTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1},
                 {1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.breadthFirstSearch(graph, -10)
         );
     }
 
     @Test
     void dfsTooLargeStartVertexTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1, 0},
                 {1, 0, 1},
                 {0, 1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.depthFirstSearch(graph, 100)
         );
     }
 
     @Test
     void bfsTooLargeStartVertexTest() {
-        int[][] matrix = {
+        Graph graph = new Graph(new int[][]{
                 {0, 1, 0},
                 {1, 0, 1},
                 {0, 1, 0}
-        };
-
-        Graph graph = new Graph(matrix);
+        });
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.breadthFirstSearch(graph, 999)
         );
     }
@@ -545,11 +480,7 @@ class GraphDFUBFSTest {
 
     @Test
     void shortestPathStartEqualsEndInSingleVertexGraphTest() {
-        int[][] matrix = {
-                {0}
-        };
-
-        Graph graph = new Graph(matrix);
+        Graph graph = new Graph(new int[][]{{0}});
 
         int result =
                 GraphAlgorithms.getShortestPathBetweenVertices(graph, 1, 1);
@@ -574,5 +505,37 @@ class GraphDFUBFSTest {
         assertEquals(4, result);
     }
 
+    @Test
+    void shortestPathNegativeWeightsTest() {
+        int[][] matrix = {
+                {0, -1},
+                {-1, 0}
+        };
 
+        assertThrows(
+                WrongMatrixException.class,
+                () -> new Graph(matrix)
+        );
+    }
+
+    @Test
+    void shortestPathNullGraphTest() {
+        assertThrows(
+                WrongMatrixException.class,
+                () -> GraphAlgorithms.getShortestPathBetweenVertices(null, 1, 2)
+        );
+    }
+
+    @Test
+    void shortestPathInvalidVertexTest() {
+        Graph graph = new Graph(new int[][]{
+                {0, 1},
+                {1, 0}
+        });
+
+        assertThrows(
+                WrongInputData.class,
+                () -> GraphAlgorithms.getShortestPathBetweenVertices(graph, 1, 5)
+        );
+    }
 }

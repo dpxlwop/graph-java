@@ -1,0 +1,93 @@
+package org.school;
+
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class CliService {
+    @Getter
+    private final Graph graph;
+    private final Scanner scanner;
+
+    public CliService(){
+        this.graph = new Graph();
+        this.scanner = new Scanner(System.in);
+        this.scanner.useLocale(Locale.US);
+    }
+
+    public int getOption(){
+        drawMainWindow();
+        return parseInt();
+    }
+
+    public void loadNewGraph(){
+        try{
+            this.graph.loadGraphFromFile(getFilename());
+            System.out.println("Graph loaded successfully!\n");
+        } catch (RuntimeException e){
+            System.out.println("Wrong file!");
+        }
+
+    }
+
+    public int getVertex(){
+        System.out.print("Enter start vertex: ");
+        return parseInt();
+    }
+
+    public void printMatrix(int[] matrix){
+        System.out.println(Arrays.toString(matrix));
+    }
+
+    public void printMatrix(int[][] matrix){
+        for (int[] row : matrix){
+            System.out.println(Arrays.toString(row));
+        }
+    }
+
+    public void printAntResult(TsmResult result){
+        System.out.println("Route: ");
+        printMatrix(result.getVertices());
+        System.out.printf("Distance: %.2f%n", result.getDistance());
+    }
+
+    private String getFilename(){
+        System.out.print("Enter filepath: ");
+        return scanner.next();
+    }
+
+    private int parseInt() {
+        while (true) {
+            if (scanner.hasNextInt()) {
+                int number = scanner.nextInt();
+                if (number > 0) {
+                    return number;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.print("Could not parse a number. Please, try again: ");
+        }
+    }
+
+    private void drawMainWindow(){
+        System.out.println("\n*************************");
+        System.out.println("s21 graph algorithms CLI");
+        if (graph.getSize() == 0){
+            System.out.println("1. Load graph from file");
+        } else {
+            System.out.println("1. Load graph from file");
+            System.out.println("2. DFS");
+            System.out.println("3. BFS");
+            System.out.println("4. Get shortest path between vertices");
+            System.out.println("5. All-pairs shortest paths");
+            System.out.println("6. Minimum spanning tree");
+            System.out.println("7. Traveling salesman problem");
+            System.out.println("8. Exit");
+        }
+        System.out.println("*************************\n");
+        System.out.print("Enter option: ");
+    }
+}

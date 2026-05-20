@@ -1,6 +1,8 @@
 package org.school;
 
 import org.junit.jupiter.api.Test;
+import org.school.exceptions.WrongInputData;
+import org.school.exceptions.WrongMatrixException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,7 +91,7 @@ class GraphDijkstraTest {
     @Test
     void shortestPathNullGraphTest() {
         assertThrows(
-                NullPointerException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms.getShortestPathBetweenVertices(
                         null,
                         1,
@@ -108,7 +110,7 @@ class GraphDijkstraTest {
         Graph graph = new Graph(matrix);
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.getShortestPathBetweenVertices(
                         graph,
                         0,
@@ -127,7 +129,7 @@ class GraphDijkstraTest {
         Graph graph = new Graph(matrix);
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongInputData.class,
                 () -> GraphAlgorithms.getShortestPathBetweenVertices(
                         graph,
                         1,
@@ -144,7 +146,7 @@ class GraphDijkstraTest {
         };
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongMatrixException.class,
                 () -> new Graph(matrix)
         );
     }

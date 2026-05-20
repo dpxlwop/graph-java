@@ -1,5 +1,7 @@
 package org.school;
 
+import org.school.exceptions.WrongInputData;
+import org.school.exceptions.WrongMatrixException;
 import org.school.stack.s21_Stack;
 import org.school.queue.s21_Queue;
 
@@ -14,11 +16,11 @@ public class GraphAlgorithms {
 
     public static int[] depthFirstSearch(Graph graph, int startVertex) {
         if (graph == null) {
-            throw new NullPointerException("Graph is null");
+            throw new WrongMatrixException("Graph is null");
         }
         startVertex-=1;
         if (startVertex < 0 || startVertex >= graph.getSize()) {
-            throw new IllegalArgumentException("Start index is invalid");
+            throw new WrongInputData("Start index is invalid");
         }
         s21_Stack<Integer> stack = new s21_Stack<>();
         boolean[] visited = new boolean[graph.getSize()];
@@ -40,11 +42,11 @@ public class GraphAlgorithms {
 
     public static int[] breadthFirstSearch(Graph graph, int startVertex){
         if (graph == null) {
-            throw new NullPointerException("Graph is null");
+            throw new WrongMatrixException("Graph is null");
         }
         startVertex-=1;
         if (startVertex < 0 || startVertex >= graph.getSize()) {
-            throw new IllegalArgumentException("Start index is invalid");
+            throw new WrongInputData("Start index is invalid");
         }
         s21_Queue<Integer> queue = new s21_Queue<>();
         boolean[] visited = new boolean[graph.getSize()];
@@ -66,19 +68,19 @@ public class GraphAlgorithms {
 
     public static int getShortestPathBetweenVertices(Graph graph, int vertex1, int vertex2){
         if (graph == null){
-            throw new NullPointerException("Graph is null");
+            throw new WrongMatrixException("Graph is null");
         }
         for (int[] row : graph.getAdjacencyMatrix()){
             for(int i : row){
                 if (i < 0){
-                    throw new IllegalArgumentException("Dijkstra's algorithm can't work with negative weights of graph");
+                    throw new WrongMatrixException("Dijkstra's algorithm can't work with negative weights of graph");
                 }
             }
         }
         vertex1-=1;
         vertex2-=1;
         if (vertex1 < 0 || vertex2 < 0 || vertex1 >= graph.getSize() || vertex2 >= graph.getSize()){
-            throw new IllegalArgumentException("Invalid vertex index");
+            throw new WrongInputData("Invalid vertex index");
         }
         return dijkstraAlgorithmImpl(graph, vertex1)[vertex2];
 
@@ -118,7 +120,7 @@ public class GraphAlgorithms {
 
     public static int[][]getShortestPathsBetweenAllVertices(Graph graph){
         if (graph == null){
-            throw new NullPointerException("Graph is null");
+            throw new WrongMatrixException("Graph is null");
         }
         return floydWarshallAlgorithmImpl(graph);
     }
@@ -152,7 +154,7 @@ public class GraphAlgorithms {
 
     public static int[][] getLeastSpanningTree(Graph graph) {
         if (graph == null) {
-            throw new NullPointerException("Graph is null");
+            throw new WrongMatrixException("Graph is null");
         }
         boolean[] visited = new boolean[graph.getSize()];
         int[][] mst = new int[graph.getSize()][graph.getSize()];
@@ -176,12 +178,16 @@ public class GraphAlgorithms {
                 }
             }
             if (to == -1) {
-                throw new IllegalArgumentException("Graph is disconnected");
+                throw new WrongMatrixException("Graph is disconnected");
             }
             mst[from][to] = minWeight;
             mst[to][from] = minWeight;
             visited[to] = true;
         }
         return mst;
+    }
+
+    public static TsmResult solveTravelingSalesmanProblem(Graph graph){
+        return AntAlgorithm.makeAnts(graph);
     }
 }

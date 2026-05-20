@@ -1,6 +1,7 @@
 package org.school;
 
 import org.junit.jupiter.api.Test;
+import org.school.exceptions.WrongMatrixException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -126,7 +127,7 @@ class GraphPrimTest {
     void leastSpanningTreeNullGraphTest() {
 
         assertThrows(
-                NullPointerException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms.getLeastSpanningTree(null)
         );
     }
@@ -143,7 +144,7 @@ class GraphPrimTest {
         Graph graph = new Graph(matrix);
 
         assertThrows(
-                IllegalArgumentException.class,
+                WrongMatrixException.class,
                 () -> GraphAlgorithms.getLeastSpanningTree(graph)
         );
     }
