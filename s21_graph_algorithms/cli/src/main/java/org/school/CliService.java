@@ -32,8 +32,8 @@ public class CliService {
 
     }
 
-    public int getVertex(){
-        System.out.print("Enter start vertex: ");
+    public int getVertex(String message){
+        System.out.print(message);
         return parseInt();
     }
 

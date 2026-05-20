@@ -10,17 +10,17 @@ public class Main {
         boolean isUserWantToExit = false;
         while (!isUserWantToExit) {
             try {
-                int choise = cliService.getOption();
-                switch (choise) {
+                int choice = cliService.getOption();
+                switch (choice) {
                     case 1 -> cliService.loadNewGraph();
                     case 2 -> cliService.printMatrix(
-                            GraphAlgorithms.depthFirstSearch(cliService.getGraph(), cliService.getVertex()));
+                            GraphAlgorithms.depthFirstSearch(cliService.getGraph(), cliService.getVertex("Enter vertex: ")));
                     case 3 -> cliService.printMatrix(
-                            GraphAlgorithms.breadthFirstSearch(cliService.getGraph(), cliService.getVertex()));
+                            GraphAlgorithms.breadthFirstSearch(cliService.getGraph(), cliService.getVertex("Enter vertex: ")));
                     case 4 -> System.out.println(
                             GraphAlgorithms.getShortestPathBetweenVertices(cliService.getGraph(),
-                                    cliService.getVertex(),
-                                    cliService.getVertex()));
+                                    cliService.getVertex("Enter start vertex: "),
+                                    cliService.getVertex("Enter end vertex: ")));
                     case 5 -> cliService.printMatrix(
                             GraphAlgorithms.getShortestPathsBetweenAllVertices(cliService.getGraph()));
                     case 6 -> cliService.printMatrix(
