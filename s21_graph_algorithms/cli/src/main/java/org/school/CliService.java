@@ -17,9 +17,13 @@ public class CliService {
         this.scanner.useLocale(Locale.US);
     }
 
-    public int getOption(){
+    public int getOption() {
         drawMainWindow();
-        return parseInt();
+        if (graph.getSize() == 0) {
+            int option = parseInt(1, 2);
+            return option == 2 ? 8 : option;
+        }
+        return parseInt(1, 8);
     }
 
     public void loadNewGraph(){
@@ -34,7 +38,7 @@ public class CliService {
 
     public int getVertex(String message){
         System.out.print(message);
-        return parseInt();
+        return parseInt(1, graph.getSize());
     }
 
     public void printMatrix(int[] matrix){
@@ -58,17 +62,17 @@ public class CliService {
         return scanner.next();
     }
 
-    private int parseInt() {
+    private int parseInt(int min, int max) {
         while (true) {
             if (scanner.hasNextInt()) {
                 int number = scanner.nextInt();
-                if (number > 0) {
+                if (number >= min && number <= max) {
                     return number;
                 }
             } else {
                 scanner.next();
             }
-            System.out.print("Could not parse a number. Please, try again: ");
+            System.out.print("Wrong input. Try again: ");
         }
     }
 
@@ -77,6 +81,7 @@ public class CliService {
         System.out.println("s21 graph algorithms CLI");
         if (graph.getSize() == 0){
             System.out.println("1. Load graph from file");
+            System.out.println("2. Exit");
         } else {
             System.out.println("1. Load graph from file");
             System.out.println("2. DFS");
