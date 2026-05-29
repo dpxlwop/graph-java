@@ -45,3 +45,4 @@ bin/
 ### School 21 rules ###
 s21_graph_algorithms/README_RUS.md
 .jar
+.idea/

@@ -1,17 +1,16 @@
 package org.school;
 
-import lombok.Getter;
-import org.school.exceptions.EmptyFileException;
-import org.school.exceptions.SaveFailException;
-import org.school.exceptions.WrongFileException;
-import org.school.exceptions.WrongMatrixException;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import lombok.Getter;
+import org.school.exceptions.EmptyFileException;
+import org.school.exceptions.SaveFailException;
+import org.school.exceptions.WrongFileException;
+import org.school.exceptions.WrongMatrixException;
 
 @Getter
 public class Graph {
@@ -20,7 +19,7 @@ public class Graph {
     private boolean isWeighted;
     private boolean isEmpty;
 
-    public Graph(){
+    public Graph() {
         this.isEmpty = true;
     }
 
@@ -28,12 +27,7 @@ public class Graph {
         checkMatrix(matrix);
         this.adjacencyMatrix = new int[matrix.length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
-            System.arraycopy(
-                    matrix[i],
-                    0,
-                    this.adjacencyMatrix[i],
-                    0,
-                    matrix.length);
+            System.arraycopy(matrix[i], 0, this.adjacencyMatrix[i], 0, matrix.length);
         }
         this.size = this.adjacencyMatrix.length;
         this.isWeighted = checkWeighted();
@@ -73,11 +67,9 @@ public class Graph {
         for (int i = 0; i < this.size; i++) {
             for (int j = i + 1; j < this.size; j++) {
                 if (this.adjacencyMatrix[i][j] != 0) {
-                    stringBuilder.append(
-                            String.format("\t%d -- %d", i + 1, j + 1));
+                    stringBuilder.append(String.format("\t%d -- %d", i + 1, j + 1));
                     if (this.isWeighted) {
-                        stringBuilder.append(
-                                String.format(" [label=\"%d\"];%n", this.adjacencyMatrix[i][j]));
+                        stringBuilder.append(String.format(" [label=\"%d\"];%n", this.adjacencyMatrix[i][j]));
                     } else {
                         stringBuilder.append(";\n");
                     }
@@ -136,8 +128,8 @@ public class Graph {
         this.isWeighted = checkWeighted();
     }
 
-    private void checkIsGraphEmpty(){
-        if (isEmpty){
+    private void checkIsGraphEmpty() {
+        if (isEmpty) {
             throw new WrongMatrixException("This operation not allowed with empty graph");
         }
     }

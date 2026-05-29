@@ -9,4 +9,3 @@ public class TsmResult {
     int[] vertices;
     double distance;
 }
-

@@ -1,8 +1,7 @@
 package org.school;
 
-import org.school.exceptions.WrongMatrixException;
-
 import java.util.Random;
+import org.school.exceptions.WrongMatrixException;
 
 public class AntAlgorithm {
     private static final double ALPHA = 1.0;
@@ -13,7 +12,7 @@ public class AntAlgorithm {
     private static final double PHEROMONE = 0.1;
     private static final Random RANDOM = new Random();
 
-    private AntAlgorithm(){
+    private AntAlgorithm() {
         /* This utility class should not be instantiated */
     }
 
@@ -93,8 +92,7 @@ public class AntAlgorithm {
         route[0] = current;
         visited[current] = true;
         for (int step = 1; step < n; step++) {
-            double[] probabilities =
-                    calculateProbabilities(graph, pheromone, current, visited);
+            double[] probabilities = calculateProbabilities(graph, pheromone, current, visited);
             int next = chooseNextVertex(probabilities);
             if (next == -1) {
                 return null;
@@ -107,7 +105,8 @@ public class AntAlgorithm {
         return route;
     }
 
-    private static double[] calculateProbabilities(Graph graph, double[][] pheromone, int current, boolean[] visited) {
+    private static double[] calculateProbabilities(
+        Graph graph, double[][] pheromone, int current, boolean[] visited) {
         int n = graph.getSize();
         double[] probabilities = new double[n];
         for (int i = 0; i < n; i++) {

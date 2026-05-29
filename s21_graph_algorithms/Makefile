@@ -6,6 +6,7 @@ run: s21_cli
 	java -jar out/s21_cli.jar
 
 s21_cli: clean s21_algorithms
+	mkdir -p cli/libs
 	cp out/s21_graph.jar cli/libs
 	cp out/s21_graphAlgorithms.jar cli/libs
 	./gradlew :cli:jar
@@ -14,6 +15,7 @@ s21_algorithms: buildLibs
 	./gradlew :graphAlgorithms:jar
 
 buildLibs: s21_containers s21_graph
+	mkdir -p graphAlgorithms/libs
 	cp out/s21_containers.jar graphAlgorithms/libs/
 	cp out/s21_graph.jar graphAlgorithms/libs/
 
@@ -23,7 +25,7 @@ s21_containers:
 s21_graph:
 	./gradlew :graph:jar
 
-test: test_algo test_graph test_containers
+test: buildLibs test_algo test_graph test_containers clean
 
 test_graph:
 	./gradlew :graph:test --rerun-tasks

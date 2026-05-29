@@ -1,11 +1,10 @@
 package org.school.stack;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class StackTest {
+import org.junit.jupiter.api.Test;
 
+class StackTest {
     @Test
     void pushAndTopTest() {
         s21_Stack<Integer> s21Stack = new s21_Stack<>();

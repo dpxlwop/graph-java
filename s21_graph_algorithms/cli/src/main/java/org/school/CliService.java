@@ -1,17 +1,15 @@
 package org.school;
 
-import lombok.Getter;
-
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
+import lombok.Getter;
 
 public class CliService {
-    @Getter
-    private final Graph graph;
+    @Getter private final Graph graph;
     private final Scanner scanner;
 
-    public CliService(){
+    public CliService() {
         this.graph = new Graph();
         this.scanner = new Scanner(System.in);
         this.scanner.useLocale(Locale.US);
@@ -26,38 +24,37 @@ public class CliService {
         return parseInt(1, 8);
     }
 
-    public void loadNewGraph(){
-        try{
+    public void loadNewGraph() {
+        try {
             this.graph.loadGraphFromFile(getFilename());
             System.out.println("Graph loaded successfully!\n");
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println("Wrong file!");
         }
-
     }
 
-    public int getVertex(String message){
+    public int getVertex(String message) {
         System.out.print(message);
         return parseInt(1, graph.getSize());
     }
 
-    public void printMatrix(int[] matrix){
+    public void printMatrix(int[] matrix) {
         System.out.println(Arrays.toString(matrix));
     }
 
-    public void printMatrix(int[][] matrix){
-        for (int[] row : matrix){
+    public void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
             System.out.println(Arrays.toString(row));
         }
     }
 
-    public void printAntResult(TsmResult result){
+    public void printAntResult(TsmResult result) {
         System.out.println("Route: ");
         printMatrix(result.getVertices());
         System.out.printf("Distance: %.2f%n", result.getDistance());
     }
 
-    private String getFilename(){
+    private String getFilename() {
         System.out.print("Enter filepath: ");
         return scanner.next();
     }
@@ -76,10 +73,10 @@ public class CliService {
         }
     }
 
-    private void drawMainWindow(){
+    private void drawMainWindow() {
         System.out.println("\n*************************");
         System.out.println("s21 graph algorithms CLI");
-        if (graph.getSize() == 0){
+        if (graph.getSize() == 0) {
             System.out.println("1. Load graph from file");
             System.out.println("2. Exit");
         } else {

@@ -1,11 +1,10 @@
 package org.school.queue;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class QueueTest {
+import org.junit.jupiter.api.Test;
 
+class QueueTest {
     @Test
     void pushAndFrontTest() {
         s21_Queue<Integer> s21Queue = new s21_Queue<>();
